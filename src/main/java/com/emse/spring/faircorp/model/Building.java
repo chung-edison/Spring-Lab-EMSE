@@ -14,7 +14,7 @@ public class Building {
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "building")
+    @OneToMany(mappedBy = "building", cascade = CascadeType.ALL)
     @JsonManagedReference
     private Set<Room> rooms;
 
