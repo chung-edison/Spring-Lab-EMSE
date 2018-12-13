@@ -18,7 +18,7 @@ public class LightController {
     @Autowired
     private RoomDao roomDao;
 
-    public LightController(LightDao dao){
+    public LightController(LightDao dao) {
         this.lightDao = dao;
     }
 
@@ -38,7 +38,7 @@ public class LightController {
     @PutMapping(path = "/{id}/switch")
     public LightDto switchStatus(@PathVariable Long id) {
         Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
-        light.setStatus(light.getStatus() == Status.ON ? Status.OFF: Status.ON);
+        light.setStatus(light.getStatus() == Status.ON ? Status.OFF : Status.ON);
         return new LightDto(light);
     }
 
@@ -63,5 +63,11 @@ public class LightController {
     @DeleteMapping(path = "/{id}")
     public void delete(@PathVariable Long id) {
         lightDao.deleteById(id);
+    }
+
+    public void updateLightLevel(Long id, int level) {
+        Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
+        light.setLevel(level);
+        System.out.println("Sensor " + id + " updated Light level to " + level);
     }
 }
