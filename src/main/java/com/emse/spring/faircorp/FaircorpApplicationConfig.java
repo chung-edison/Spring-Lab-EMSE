@@ -8,7 +8,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.integration.annotation.IntegrationComponentScan;
-import org.springframework.integration.annotation.MessagingGateway;
 import org.springframework.integration.annotation.ServiceActivator;
 import org.springframework.integration.channel.DirectChannel;
 import org.springframework.integration.core.MessageProducer;
@@ -52,7 +51,7 @@ public class FaircorpApplicationConfig {
         return factory;
     }
 
-    // MQTT Outbound Adapter
+    // MQTT Outbound Adapter PUBLISHER
 
     @Bean
     @ServiceActivator(inputChannel = "mqttOutboundChannel")
@@ -69,12 +68,7 @@ public class FaircorpApplicationConfig {
         return new DirectChannel();
     }
 
-    @MessagingGateway(defaultRequestChannel = "mqttOutboundChannel")
-    public interface MqttGateway {
-        void sendToMqtt(String data);
-    }
-
-    // MQTT Inbound Adapter
+    // MQTT Inbound Adapter SUBSCRIBER
 
     @Bean
     public MessageChannel mqttInputChannel() {

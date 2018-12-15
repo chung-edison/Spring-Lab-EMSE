@@ -1,6 +1,10 @@
 package com.emse.spring.faircorp.model;
 
+import com.emse.spring.faircorp.MqttGateway;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.integration.mqtt.support.MqttHeaders;
+import org.springframework.integration.support.MessageBuilder;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,6 +21,8 @@ public class LightController {
     private final LightDao lightDao; // (4)
     @Autowired
     private RoomDao roomDao;
+    @Autowired
+    private ApplicationContext context;
 
     public LightController(LightDao dao) {
         this.lightDao = dao;
@@ -39,6 +45,9 @@ public class LightController {
     public LightDto switchStatus(@PathVariable Long id) {
         Light light = lightDao.findById(id).orElseThrow(IllegalArgumentException::new);
         light.setStatus(light.getStatus() == Status.ON ? Status.OFF : Status.ON);
+        // publish to sensor/{id}/CMD [ON, OFF]
+        MqttGateway mqttGateway = context.getBean(MqttGateway.class);
+        mqttGateway.sendToMqtt(MessageBuilder.withPayload(light.getStatus().toString()).setHeader(MqttHeaders.TOPIC,"sensor/" + id + "/CMD").build());
         return new LightDto(light);
     }
 
