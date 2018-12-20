@@ -1,6 +1,8 @@
 package com.emse.spring.faircorp.model;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +17,8 @@ public class BuildingController {
 
     @Autowired
     private final BuildingDao buildingDao; // (4)
+    @Autowired
+    private SimpMessagingTemplate template;
 
     public BuildingController(BuildingDao dao){
         this.buildingDao = dao;
