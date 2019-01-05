@@ -1,5 +1,8 @@
-package com.emse.spring.faircorp.model;
+package com.emse.spring.faircorp.model.room;
 
+import com.emse.spring.faircorp.model.Status;
+import com.emse.spring.faircorp.model.building.BuildingDao;
+import com.emse.spring.faircorp.model.light.Light;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;

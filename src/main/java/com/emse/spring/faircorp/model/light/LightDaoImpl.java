@@ -1,4 +1,6 @@
-package com.emse.spring.faircorp.model;
+package com.emse.spring.faircorp.model.light;
+
+import com.emse.spring.faircorp.model.Status;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

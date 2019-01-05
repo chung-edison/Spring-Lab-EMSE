@@ -1,12 +1,13 @@
-package com.emse.spring.faircorp.model;
+package com.emse.spring.faircorp.model.light;
 
 import com.emse.spring.faircorp.MqttGateway;
+import com.emse.spring.faircorp.model.room.RoomDao;
+import com.emse.spring.faircorp.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.integration.mqtt.support.MqttHeaders;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.messaging.handler.annotation.DestinationVariable;
-import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;

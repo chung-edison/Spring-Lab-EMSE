@@ -1,4 +1,4 @@
-package com.emse.spring.faircorp.model;
+package com.emse.spring.faircorp.model.room;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

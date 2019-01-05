@@ -1,4 +1,4 @@
-package com.emse.spring.faircorp.model;
+package com.emse.spring.faircorp.model.light;
 
 import java.util.List;
 

@@ -1,4 +1,6 @@
-package com.emse.spring.faircorp.model;
+package com.emse.spring.faircorp.model.room;
+
+import com.emse.spring.faircorp.model.light.Light;
 
 import java.util.Set;
 

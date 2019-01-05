@@ -1,5 +1,6 @@
-package com.emse.spring.faircorp.model;
+package com.emse.spring.faircorp.model.building;
 
+import com.emse.spring.faircorp.model.room.Room;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import javax.persistence.*;

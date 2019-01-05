@@ -1,5 +1,7 @@
-package com.emse.spring.faircorp.model;
+package com.emse.spring.faircorp.model.room;
 
+import com.emse.spring.faircorp.model.building.Building;
+import com.emse.spring.faircorp.model.light.Light;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 

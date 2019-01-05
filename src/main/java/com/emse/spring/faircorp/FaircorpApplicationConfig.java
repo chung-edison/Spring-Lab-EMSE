@@ -1,7 +1,9 @@
 package com.emse.spring.faircorp;
 
 import com.emse.spring.faircorp.hello.GreetingService;
-import com.emse.spring.faircorp.model.LightController;
+import com.emse.spring.faircorp.model.light.LightController;
+import com.emse.spring.faircorp.model.MeasurementDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -97,11 +99,21 @@ public class FaircorpApplicationConfig {
                 String fullTopic = message.getHeaders().get("mqtt_receivedTopic").toString();
                 String topic[] = fullTopic.split("/");
                 Long id = Long.parseLong(topic[1]);
-                String sensorType = topic[2];
-                int value = Integer.parseInt(message.getPayload().toString());
-                System.out.println(fullTopic + " " + value + " " + id);
-                if (sensorType.equals("LUMI"))
-                    lightController.updateLightLevel(id, value);
+                String sensorTopic = topic[2];
+                String jsonData = message.getPayload().toString();
+                System.out.println(fullTopic + " " + jsonData + " " + id);
+                if (sensorTopic.equals("DATA")) {
+                    try {
+                        ObjectMapper objectMapper = new ObjectMapper();
+                        MeasurementDto[] mListDto = objectMapper.readValue(jsonData, MeasurementDto[].class);
+                        for (MeasurementDto measurementDto:mListDto){
+                            if(measurementDto.getN().equals("lightLevel"))
+                                lightController.updateLightLevel(id, measurementDto.getV());
+                        }
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
             }
         };
     }
