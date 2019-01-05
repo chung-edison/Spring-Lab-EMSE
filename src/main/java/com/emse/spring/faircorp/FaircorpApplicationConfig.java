@@ -1,8 +1,10 @@
 package com.emse.spring.faircorp;
 
 import com.emse.spring.faircorp.hello.GreetingService;
+import com.emse.spring.faircorp.model.hmdtSensor.HmdtSensorController;
 import com.emse.spring.faircorp.model.light.LightController;
 import com.emse.spring.faircorp.model.MeasurementDto;
+import com.emse.spring.faircorp.model.tempSensor.TempSensorController;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.eclipse.paho.client.mqttv3.MqttConnectOptions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +31,12 @@ public class FaircorpApplicationConfig {
 
     @Autowired
     private LightController lightController;
+
+    @Autowired
+    private TempSensorController tempSensorController;
+
+    @Autowired
+    private HmdtSensorController hmdtSensorController;
 
     @Bean
     public CommandLineRunner greetingCommandLine(GreetingService greetingService) { // (3)
@@ -106,11 +114,20 @@ public class FaircorpApplicationConfig {
                     try {
                         ObjectMapper objectMapper = new ObjectMapper();
                         MeasurementDto[] mListDto = objectMapper.readValue(jsonData, MeasurementDto[].class);
-                        for (MeasurementDto measurementDto:mListDto){
-                            if(measurementDto.getN().equals("lightLevel"))
-                                lightController.updateLightLevel(id, measurementDto.getV());
+                        for (MeasurementDto measurementDto : mListDto) {
+                            switch (measurementDto.getN()) {
+                                case "lightLevel":
+                                    lightController.updateLightLevel(id, measurementDto.getV());
+                                    break;
+                                case "temperature":
+                                    tempSensorController.updateTemperature(id, measurementDto.getV());
+                                    break;
+                                case "relHumidity":
+                                    hmdtSensorController.updateHumidity(id, measurementDto.getV());
+                                    break;
+                            }
                         }
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }

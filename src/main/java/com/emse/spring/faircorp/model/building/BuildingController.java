@@ -16,10 +16,8 @@ public class BuildingController {
 
     @Autowired
     private final BuildingDao buildingDao; // (4)
-    @Autowired
-    private SimpMessagingTemplate template;
 
-    public BuildingController(BuildingDao dao){
+    public BuildingController(BuildingDao dao) {
         this.buildingDao = dao;
     }
 
